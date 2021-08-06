@@ -1,22 +1,23 @@
 {
-  "name": "pi-projects",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://Machine-3R@github.com/Machine-3R/pi-projects.git"
-  },
-  "author": "Machine-3R",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Machine-3R/pi-projects/issues"
-  },
-  "homepage": "https://github.com/Machine-3R/pi-projects#readme",
-  "dependencies": {
-    "rpi-gpio": "^2.1.7"
-  }
+    "name": "pi-projects",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://Machine-3R@github.com/Machine-3R/pi-projects.git"
+    },
+    "author": "Machine-3R",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Machine-3R/pi-projects/issues"
+    },
+    "homepage": "https://github.com/Machine-3R/pi-projects#readme",
+    "dependencies": {
+        "rpi-gpio": "^2.1.7"
+    }
 }
