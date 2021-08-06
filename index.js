@@ -17,7 +17,7 @@ function toggle() {
 gpio.setup(pin, gpio.DIR_OUT, error);
 
 // toggle led every second
-const action = setInterval(toggle, 1000);
+const action = setInterval(toggle, 500);
 
 // handle script end
 setTimeout(
