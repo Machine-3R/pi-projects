@@ -1,6 +1,6 @@
 var console = require('console'),
     gpio = require('rpi-gpio'),
-    pin = 18,
+    pin = 12,
     led = false;
 
 function error(err) {
