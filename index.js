@@ -5,7 +5,9 @@ var gpio = require('rpi-gpio'),
 function toggle() {
     led = (led + 1) % 2;
     console.log("led:", led);
-    gpio.write(pin, led);
+    gpio.write(pin, led, (err)=> {
+        console.err(err);
+    });
 }
 
 // setup
