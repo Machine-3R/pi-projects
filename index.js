@@ -24,5 +24,6 @@ setTimeout(
     function () {
         clearInterval(action);
 //        gpio.destroy();
+        console.log("Done.");
     }
 , 10000);
