@@ -7,7 +7,7 @@ function toggle() {
     led = (led + 1) % 2;
     console.log("pin:", pin, "=", led);
     gpio.write(pin, led, (err)=> {
-        console.err(err);
+        console.log(err);
     });
 }
 
