@@ -1,19 +1,19 @@
 var console = require('console'),
     gpio = require('rpi-gpio'),
     pin = 18,
-    led = 0;
+    led = false;
 
 function toggle() {
-    led = (led + 1) % 2;
+    led = !led;
     console.log("pin:", pin, "=", led);
     gpio.write(pin, led, (err)=> {
-        console.log(err);
+        err && console.log(err);
     });
 }
 
 // setup
 gpio.setup(pin, gpio.DIR_OUT, err => {
-    console.log(err);
+    err && console.log(err);
 });
 
 // toggle led every second
@@ -23,6 +23,6 @@ const action = setInterval(toggle, 1000);
 setTimeout(
     function () {
         clearInterval(action);
-        gpio.destroy();
+//        gpio.destroy();
     }
 , 10000);
