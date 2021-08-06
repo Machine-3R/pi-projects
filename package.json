@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Machine-3R/pi-projects/issues"
   },
-  "homepage": "https://github.com/Machine-3R/pi-projects#readme"
+  "homepage": "https://github.com/Machine-3R/pi-projects#readme",
+  "dependencies": {
+    "rpi-gpio": "^2.1.7"
+  }
 }
