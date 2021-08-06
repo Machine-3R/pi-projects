@@ -13,7 +13,7 @@ function toggle() {
 
 // setup
 gpio.setup(pin, gpio.DIR_OUT, err => {
-    console.error(err);
+    console.log(err);
 });
 
 // toggle led every second
