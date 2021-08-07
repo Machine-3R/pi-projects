@@ -20,11 +20,12 @@ var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
             [0, 0, 0, 1, 0],
             [0, 0, 0, 0, 1]
         ],
-        step: 0,
+        step: 3,
 
         init: function () {
             for (var i in this.pins) {
                 var pin = this.pins[i];
+                console.log('setup:', pin);
                 !isWindows && gpio.setup(pin, gpio.DIR_OUT);
             }
             console.log('Stepper initiated..');
@@ -44,11 +45,13 @@ var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
                 var pin = this.pins[i];
                 var value = values[i];
                 !isWindows && gpio.write(pin, value);
+                console.log('pin:', pin, 'value:', value);
             }
             this.status();
         },
         status() {
-//            console.log("step", this.step);
+            var values = this.sequences[this.step];
+            console.log("step", this.step, 'values:', values);
         }
     };
 
@@ -68,9 +71,9 @@ const action = setInterval(led.toggle, 1000);
 stepper.init();
 
 // stepper forward
-setTimeout(function () {
+setInterval(function () {
     stepper.forward();
-}, 100);
+}, 1000);
 
 //stepper backward
 
@@ -78,7 +81,7 @@ setTimeout(function () {
 
 // handle script end
 setTimeout(function () {
-    clearInterval(action);
+//    clearInterval(action);
     !isWindows && gpio.destroy(error);
     console.log("Done.");
     return process.exit(1);
