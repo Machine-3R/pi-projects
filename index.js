@@ -43,14 +43,15 @@ var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
             var combi = {};
             for (var i in this.pins) {
                 try {
-                var pin = this.pins[i];
-                var value = values[i];
-                combi[pin] = value;
-                !isWindows && gpio.write(pin, value);
-                console.log('pin:', pin, 'value:', value);
-            } catch(err) {
-                console.log(pin, value, err);
-            }
+                    var pin = this.pins[i];
+                    var value = values[i];
+                    combi[pin] = value;
+                    !isWindows && gpio.write(pin, value);
+                    console.log('pin:', pin, 'value:', value);
+                } catch (err) {
+                    console.log(pin, value, err);
+                    process.exit(0);
+                }
             }
             this.status(combi);
         },
