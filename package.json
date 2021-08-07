@@ -18,6 +18,7 @@
     },
     "homepage": "https://github.com/Machine-3R/pi-projects#readme",
     "dependencies": {
+        "os-name": "^4.0.1",
         "rpi-gpio": "^2.1.7"
     }
 }
