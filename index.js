@@ -40,17 +40,23 @@ var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
         },
         _move: function () {
             var values = this.sequences[this.step];
+            var combi = {};
             for (var i in this.pins) {
+                try {
                 var pin = this.pins[i];
                 var value = values[i];
+                combi[pin] = value;
                 !isWindows && gpio.write(pin, value);
                 console.log('pin:', pin, 'value:', value);
+            } catch(err) {
+                console.log(pin, value, err);
             }
-            this.status();
+            }
+            this.status(combi);
         },
-        status() {
+        status(...extra) {
             var values = this.sequences[this.step];
-            console.log("step", this.step, 'values:', values);
+            console.log("step", this.step, extra);
         }
     };
 
