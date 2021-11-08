@@ -12,22 +12,23 @@ var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
         }
     };
 
-function error(err) {
-    err && console.log(err);
+function blink(err) {
+    err && console.log(err) && process.exit(1);
+    
+    const action = setInterval(led.toggle, 1000);
+
+// handle script end
+    setTimeout(function () {
+        clearInterval(action);
+        !isWindows && gpio.destroy(error);
+        console.log("Done.");
+        return process.exit(1);
+    }, 11000);
 }
 
 console.log("Starting...");
 
 // setup led
-!isWindows && gpio.setup(led.pin, gpio.DIR_OUT, error);
+!isWindows && gpio.setup(led.pin, gpio.DIR_OUT, blink);
 
 // toggle led every second
-const action = setInterval(led.toggle, 1000);
-
-// handle script end
-setTimeout(function () {
-//    clearInterval(action);
-    !isWindows && gpio.destroy(error);
-    console.log("Done.");
-    return process.exit(1);
-}, 11000);
