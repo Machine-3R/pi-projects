@@ -1,96 +1,41 @@
-var isWindows = !!require("os-name")().match(/Windows[.]*/gi),
-    process = require('process'),
-    console = require('console'),
-    gpio = require('rpi-gpio'),
-    led = {
-        value: false,
-        pin: 12,
-        toggle: function () {
-            this.value = !this.value;
-//            console.log("pin:", this.pin, "=", this.value);
-            !isWindows && gpio.write(this.pin, this.value, error);
-        }
+const rpio = require('rpio');
+rpio.init({
+    gpiomem: true,
+    mapping: 'physical',
+    mock: 'raspi-3',
+    close_on_exit: true
+});
+
+let motor = {
+    _pins: [18, 22, 24, 26],
+    values: [rpio.LOW, rpio.LOW, rpio.LOW, rpio.HIGH],
+    up: function () {
+        this.values.unshift(this.values.pop());
+        return this.pins();
     },
-    stepper = {
-        pins: [18, 22, 24, 26],
-        sequences: [
-            [1, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1]
-        ],
-        step: 3,
+    down: function () {
+        this.values.push(this.values.shift());
+        return this.pins();
+    },
+    pins: function () {
+        return Object.assign.apply({}, this._pins.map((v, i) => ({ [v]: this.values[i] })));
+    }
+};
+console.log('start', motor.pins());
 
-        init: function () {
-            for (var i in this.pins) {
-                var pin = this.pins[i];
-                console.log('setup:', pin);
-                !isWindows && gpio.setup(pin, gpio.DIR_OUT);
-            }
-            console.log('Stepper initiated..');
-            this.status();
-        },
-        forward: function () {
-            this.step = (this.step + 1) % this.pins.length;
-            this._move();
-        },
-        backward: function () {
-            this.step = (this.step + this.pins.length - 1) % this.pins.length;
-            this._move();
-        },
-        _move: function () {
-            var values = this.sequences[this.step];
-            var combi = {};
-            for (var i in this.pins) {
-                try {
-                    var pin = this.pins[i];
-                    var value = values[i];
-                    combi[pin] = value;
-                    !isWindows && gpio.write(pin, value);
-                    console.log('pin:', pin, 'value:', value);
-                } catch (err) {
-                    console.log(pin, value, err);
-                    process.exit(0);
-                }
-            }
-            this.status(combi);
-        },
-        status(...extra) {
-            var values = this.sequences[this.step];
-            console.log("step", this.step, extra);
-        }
-    };
+rpio.open(18, rpio.OUTPUT, rpio.LOW);
+rpio.open(22, rpio.OUTPUT, rpio.LOW);
+rpio.open(24, rpio.OUTPUT, rpio.LOW);
+rpio.open(26, rpio.OUTPUT, rpio.LOW);
 
-function error(err) {
-    err && console.log(err);
-}
-
-console.log("Starting...");
-
-// setup led
-!isWindows && gpio.setup(led.pin, gpio.DIR_OUT, error);
-
-// toggle led every second
-const action = setInterval(led.toggle, 1000);
-
-// construct stepper
-stepper.init();
-
-// stepper forward
-setInterval(function () {
-    stepper.forward();
+let t = setInterval(function() {
+    let pins = motor.up();
+    console.log(pins);
+    for ( let pin in pins) {
+        rpio.write(pin, pins[pin]);
+    }
 }, 1000);
 
-//stepper backward
-
-
-
-// handle script end
-setTimeout(function () {
-//    clearInterval(action);
-    !isWindows && gpio.destroy(error);
-    console.log("Done.");
-    return process.exit(1);
-}, 11000);
-
-//test
+setTimeout(function() {
+    clearInterval(t);
+}, 10000);
