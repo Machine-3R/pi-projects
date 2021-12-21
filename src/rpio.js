@@ -1,0 +1,32 @@
+const rpio = require('rpio');
+const pins = {
+    3: 'GPIO02',
+    5: 'GPIO03',
+    7: 'GPIO04',
+    8: 'GPIO14',
+    10: 'GPIO15',
+    11: 'GPIO17',
+    12: 'GPIO18',
+    13: 'GPIO27',
+    15: 'GPIO22',
+    16: 'GPIO23',
+    18: 'GPIO24',
+    19: 'GPIO10',
+    21: 'GPIO09',
+    22: 'GPIO25',
+    23: 'GPIO11',
+    24: 'GPIO08',
+    26: 'GPIO07',
+    27: 'GPIO00',
+    28: 'GPIO01',
+    29: 'GPIO05',
+    31: 'GPIO06',
+    32: 'GPIO12',
+    33: 'GPIO13',
+    35: 'GPIO19',
+    36: 'GPIO16',
+    37: 'GPIO26',
+    38: 'GPIO20',
+    40: 'GPIO21'
+};
+pins
