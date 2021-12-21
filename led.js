@@ -6,7 +6,7 @@ const iv = setInterval(function() {
     let read = led.readSync();
     led.writeSync( read ^ 1);
     console.log(read, read^1);
-}, 200);
+}, 1000);
 
 // Stop blinking the LED after 5 seconds
 setTimeout(function() {
