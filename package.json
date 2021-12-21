@@ -20,6 +20,7 @@
     "dependencies": {
         "gpio-stream": "^1.0.17",
         "node-red": "^2.1.4",
+        "onoff": "^6.0.3",
         "rpio": "^2.4.2"
     }
 }
