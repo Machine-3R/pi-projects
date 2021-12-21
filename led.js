@@ -3,7 +3,9 @@ let led = new Gpio(7, 'out');
 
 // Toggle the state of the LED connected to GPIO17 every 200ms
 const iv = setInterval(function() {
-     led.writeSync(led.readSync() ^ 1);
+    let read = led.readSync();
+    led.writeSync( read ^ 1);
+    console.log(read, read^1);
 }, 200);
 
 // Stop blinking the LED after 5 seconds
