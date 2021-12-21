@@ -34,7 +34,7 @@ let t = setInterval(function() {
     for ( let pin in pins) {
         rpio.write(pin, pins[pin]);
     }
-}, 1000);
+}, 100);
 
 setTimeout(function() {
     clearInterval(t);
