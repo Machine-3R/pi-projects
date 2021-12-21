@@ -1,15 +1,21 @@
-const Gpio = require('onoff').Gpio;
-let led = new Gpio(7, 'out');
+var gpio = require('rpi-gpio');
 
-// Toggle the state of the LED connected to GPIO17 every 200ms
-const iv = setInterval(function() {
-    let read = led.readSync();
-    led.writeSync( read ^ 1);
-    console.log(read, read^1);
-}, 1000);
+gpio.setup(7, gpio.DIR_LOW, function (err) {
+    if (err) throw err;
 
-// Stop blinking the LED after 5 seconds
-setTimeout(function() {
-  clearInterval(iv); // Stop blinking
-  led.unexport();    // Unexport GPIO and free resources
-}, 5000);
+    let value = false;
+    let t = setInterval(function () {
+        value = !value;
+        gpio.write(7, value, function (err) {
+            if (err) throw err;
+            console.log('Written to pin');
+        });
+    }, 1000);
+
+    setTimeout(function () {
+        clearInterval(t);
+        gpio.destroy(function(...incoming) {
+            console.log(incoming);
+        });
+    }, 10000);
+});
