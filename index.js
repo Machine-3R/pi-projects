@@ -16,54 +16,54 @@ app.get('/', (req, res) => {
     `);
 });
 
-function openBrowser() {
-    return setTimeout(async () => {
-        await open('http://localhost:80/')
-            .catch(err => {
-                console.log(err);
-            });
-    }, 1000);
-}
-let t = openBrowser();
+// function openBrowser() {
+//     return setTimeout(async () => {
+//         await open('http://localhost:80/')
+//             .catch(err => {
+//                 console.log(err);
+//             });
+//     }, 1000);
+// }
+// let t = openBrowser();
 
-// start communications
-io
-    .on('connection', (socket) => {
-        console.log('a user connected');
-        t && clearTimeout(t);
+// // start communications
+// io
+//     .on('connection', (socket) => {
+//         console.log('a user connected');
+//         t && clearTimeout(t);
 
-        socket
-            .on('disconnect', () => {
-                console.log('user disconnected');
-            });
+//         socket
+//             .on('disconnect', () => {
+//                 console.log('user disconnected');
+//             });
 
-        gpio.on('change', (channel, value) => {
-            console.log('channel', channel, 'changed to ', value);
-            socket.emit('gpio.change', channel, value);
-        })
+//         gpio.on('change', (channel, value) => {
+//             console.log('channel', channel, 'changed to ', value);
+//             socket.emit('gpio.change', channel, value);
+//         })
 
-        socket.emit('welcome', 'Welcome on this server.');
-    });
+//         socket.emit('welcome', 'Welcome on this server.');
+//     });
 
-gpio.setup(7, gpio.DIR_LOW, function (err) {
-    if (err) throw err;
+// gpio.setup(7, gpio.DIR_LOW, function (err) {
+//     if (err) throw err;
 
-    let value = false;
-    let t = setInterval(function () {
-        value = !value;
-        gpio.write(7, value, function (err) {
-            if (err) throw err;
-            console.log('Written to pin 7:', value);
-        });
-    }, 1000);
+//     let value = false;
+//     let t = setInterval(function () {
+//         value = !value;
+//         gpio.write(7, value, function (err) {
+//             if (err) throw err;
+//             console.log('Written to pin 7:', value);
+//         });
+//     }, 1000);
 
-    setTimeout(function () {
-        clearInterval(t);
-        gpio.destroy(function (...incoming) {
-            console.log(incoming);
-        });
-    }, 10000);
-});
+//     setTimeout(function () {
+//         clearInterval(t);
+//         gpio.destroy(function (...incoming) {
+//             console.log(incoming);
+//         });
+//     }, 10000);
+// });
 
 // start server
 // open browser
