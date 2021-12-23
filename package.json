@@ -18,11 +18,10 @@
     },
     "homepage": "https://github.com/Machine-3R/pi-projects#readme",
     "dependencies": {
+        "express": "^4.17.2",
         "gpio-stream": "^1.0.17",
-        "node-red": "^2.1.4",
-        "onoff": "^6.0.3",
+        "open": "^8.4.0",
         "rpi-gpio": "^2.1.7",
-        "rpio": "^2.4.2",
-        "wiring-pi": "^2.2.1"
+        "socket.io": "^4.4.0"
     }
 }
