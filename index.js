@@ -26,24 +26,24 @@ app.get('/', (req, res) => {
 // }
 // let t = openBrowser();
 
-// // start communications
-// io
-//     .on('connection', (socket) => {
-//         console.log('a user connected');
-//         t && clearTimeout(t);
+// start communications
+io
+    .on('connection', (socket) => {
+        console.log('a user connected');
+//        t && clearTimeout(t);
 
-//         socket
-//             .on('disconnect', () => {
-//                 console.log('user disconnected');
-//             });
+        socket
+            .on('disconnect', () => {
+                console.log('user disconnected');
+            });
 
-//         gpio.on('change', (channel, value) => {
-//             console.log('channel', channel, 'changed to ', value);
-//             socket.emit('gpio.change', channel, value);
-//         })
+        gpio.on('change', (channel, value) => {
+            console.log('channel', channel, 'changed to ', value);
+            socket.emit('gpio.change', channel, value);
+        })
 
-//         socket.emit('welcome', 'Welcome on this server.');
-//     });
+        socket.emit('welcome', 'Welcome on this server.');
+    });
 
 // gpio.setup(7, gpio.DIR_LOW, function (err) {
 //     if (err) throw err;
