@@ -68,6 +68,6 @@ app.get('/', (req, res) => {
 // start server
 // open browser
 server
-    .listen(80, () => {
+    .listen(8080, () => {
         console.log('Server started listening...');
     });
