@@ -16,21 +16,21 @@ app.get('/', (req, res) => {
     `);
 });
 
-// function openBrowser() {
-//     return setTimeout(async () => {
-//         await open('http://localhost:80/')
-//             .catch(err => {
-//                 console.log(err);
-//             });
-//     }, 1000);
-// }
-// let t = openBrowser();
+function openBrowser() {
+    return setTimeout(async () => {
+        await open('http://localhost:80/')
+            .catch(err => {
+                console.log(err);
+            });
+    }, 1000);
+}
+let t = openBrowser();
 
 // start communications
 io
     .on('connection', (socket) => {
         console.log('a user connected');
-//        t && clearTimeout(t);
+        t && clearTimeout(t);
 
         socket
             .on('disconnect', () => {
