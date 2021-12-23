@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 
 function openBrowser() {
     return setTimeout(async () => {
-        await open('http://localhost:80/')
+        await open('http://localhost:8080/')
             .catch(err => {
                 console.log(err);
             });
@@ -37,10 +37,10 @@ io
                 console.log('user disconnected');
             });
 
-        gpio.on('change', (channel, value) => {
-            console.log('channel', channel, 'changed to ', value);
-            socket.emit('gpio.change', channel, value);
-        })
+        // gpio.on('change', (channel, value) => {
+        //     console.log('channel', channel, 'changed to ', value);
+        //     socket.emit('gpio.change', channel, value);
+        // })
 
         socket.emit('welcome', 'Welcome on this server.');
     });

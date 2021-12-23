@@ -3,7 +3,11 @@ function onload() {
     socket = io();
     socket
         .on("welcome", (msg) => {
-            console.log(msg);
+            console.log('server:', msg);
+
+            let div = document.createElement('div');
+            div.innerHTML = 'Server says: '+ msg;
+            document.body.appendChild(div);
         })
         .on('gpio.change', (channel, value) => {
             console.log('channel', channel, 'changed to ', value);
