@@ -4,7 +4,7 @@ function onload() {
     socket
         .on("welcome", (msg) => {
             console.log('server:', msg);
-
+            alert(msg);
             let div = document.createElement('div');
             div.innerHTML = 'Server says: '+ msg;
             document.body.appendChild(div);
