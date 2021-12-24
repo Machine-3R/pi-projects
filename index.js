@@ -7,10 +7,12 @@ const gpio = require('rpi-gpio');
 
 app.use(express.static('public'));
 app.get('/', (req, res) => {
+    console.log('request received.');
     res.send(`<html><body>Testing<script src="/client.js"></script></body></html>`);
 });
 
 function openBrowser() {
+    console.log('opening browser.')
     return setTimeout(async () => {
         await open('http://localhost:8080/')
             .catch(err => {
@@ -18,7 +20,7 @@ function openBrowser() {
             });
     }, 1000);
 }
-let t = openBrowser();
+let t = null;
 
 // start communications
 io
@@ -44,4 +46,5 @@ io
 server
     .listen(8080, () => {
         console.log('Server started listening...');
+        t = openBrowser();
     });

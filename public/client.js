@@ -1,4 +1,4 @@
-alert('client.js loaded');
+//alert('client.js loaded');
 var console = {
     container: document.querySelector('#console') || function () {
         let div = document.createElement('div');
