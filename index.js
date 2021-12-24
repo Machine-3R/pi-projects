@@ -7,13 +7,7 @@ const gpio = require('rpi-gpio');
 
 app.use(express.static('public'));
 app.get('/', (req, res) => {
-    res.send(`
-    <html>
-        <head>
-            <script src="client.js"></script>
-        </head>
-    </html>
-    `);
+    res.send(`<html><body><script src="/client.js"></script></body></html>`);
 });
 
 function openBrowser() {
@@ -37,33 +31,13 @@ io
                 console.log('user disconnected');
             });
 
-        // gpio.on('change', (channel, value) => {
-        //     console.log('channel', channel, 'changed to ', value);
-        //     socket.emit('gpio.change', channel, value);
-        // })
+        gpio.on('change', (channel, value) => {
+            console.log('channel', channel, 'changed to ', value);
+            socket.emit('gpio.change', channel, value);
+        })
 
         socket.emit('welcome', 'Welcome on this server.');
     });
-
-// gpio.setup(7, gpio.DIR_LOW, function (err) {
-//     if (err) throw err;
-
-//     let value = false;
-//     let t = setInterval(function () {
-//         value = !value;
-//         gpio.write(7, value, function (err) {
-//             if (err) throw err;
-//             console.log('Written to pin 7:', value);
-//         });
-//     }, 1000);
-
-//     setTimeout(function () {
-//         clearInterval(t);
-//         gpio.destroy(function (...incoming) {
-//             console.log(incoming);
-//         });
-//     }, 10000);
-// });
 
 // start server
 // open browser
