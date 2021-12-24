@@ -7,7 +7,7 @@ const gpio = require('rpi-gpio');
 
 app.use(express.static('public'));
 app.get('/', (req, res) => {
-    res.send(`<html><body><script src="/client.js"></script></body></html>`);
+    res.send(`<html><body>Testing<script src="/client.js"></script></body></html>`);
 });
 
 function openBrowser() {
