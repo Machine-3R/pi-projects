@@ -5,11 +5,16 @@ const io = require('socket.io')(server);
 const open = require('open');
 const gpio = require('rpi-gpio');
 
-app.use(express.static('public'));
-app.get('/', (req, res) => {
-    console.log('request received.');
-    res.send(`<html><body>Testing<script src="/client.js" onload="alert('XXX');"></script></body></html>`);
-});
+app
+    .use(express.static('public'))
+    .get('/', (req, res) => {
+        console.log('request received.');
+        res.send(`<html><body>Testing<script src="/client.js"></script></body></html>`);
+    })
+    .get('*', async (req, res) => {
+        console.log(req.method, req.path, req.params);
+        res.send('Request received ' + Math.floor(Math.random() * 1000000));
+    });
 
 function openBrowser() {
     console.log('opening browser.')
