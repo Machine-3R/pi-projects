@@ -1,18 +1,55 @@
 <!DOCTYPE html>
 <html>
 
-<head></head>
+<head>
+    <script src="/socket.io/socket.io.js" async="false" defer="false"></script>
+
+</head>
 
 <body>
-    Index loaded
-    <script src="/socket.io/socket.io.js" onload="alert('socket.io loaded...')"></script>
+    <div>
+        Index loaded
+        <script>document.write(Math.floor(Math.random() * 1000000))</script>
+    </div>
     <script>
-        alert('index loaded');
-        (function (document, io) {
-            alert('document loaded')
-            io && alert('io available');
-        })(document, io)
+        var console = {
+            container: document.querySelector('#console') || function () {
+                let div = document.createElement('div');
+                div.id = "console";
+                return document.body.appendChild(div);
+            }(),
+            log: function (...values) {
+                let now = new Date();
+                let div = document.createElement('div');
+                div.id = "log";
+                div.innerHTML = '<span>'
+                    + now.toLocaleString('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    })
+                    + '.'
+                    + now.getMilliseconds() + '</span>';
+                div.innerHTML += " " + values.join(' ');
+                this.container.appendChild(div);
+            }
+        };
     </script>
+    <script>
+        let script = document.querySelector('script[src="/socket.io/socket.io.js"]');
+        script && script
+            .addEventListener('load', function () {
+                socket = io();
+                socket
+                    .on("welcome", (msg) => {
+                        console.log('server:', msg);
+                    })
+                    .on('gpio.change', (channel, value) => {
+                        console.log('channel', channel, 'changed to ', value);
+                    })
+            });
+    </script>
+
 </body>
 
 </html>
