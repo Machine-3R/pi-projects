@@ -5,8 +5,9 @@
 
 <body>
     Index loaded
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js" onload="alert('socket.io loaded...')"></script>
     <script>
+        alert('index loaded');
         (function (document, io) {
             alert('document loaded')
             io && alert('io available');
