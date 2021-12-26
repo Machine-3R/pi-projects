@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    Index loaded
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        (function (document, io) {
+            alert('document loaded')
+            io && alert('io available');
+        })(document, io)
+    </script>
+</body>
+
+</html>
