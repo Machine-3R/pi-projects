@@ -37,7 +37,9 @@ io
 gpiop.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH)
     .then(() => {
         console.log(7, 'setup ready');
-        return gpiop.write(7, !gpio.read(7) );
+        value = !gpio.read(7);
+        console.log('wrting 7: ', value);
+        return gpiop.write(7, value );
     })
     .catch((err) => {
         console.log('ERR:', 7, err);
