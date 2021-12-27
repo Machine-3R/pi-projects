@@ -19,6 +19,12 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
+gpio
+    .on('change', (channel, value) => {
+        console.log('channel', channel, 'changed to ', value);
+        io.emit('gpio.change', {channel, value});
+    })
+
 server
     .listen(8080, () => {
         console.log('Server started listening...');
