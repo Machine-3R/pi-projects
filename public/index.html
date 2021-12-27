@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <script src="/socket.io/socket.io.js" async="false" defer="false" onload="onload()"></script>
+    <script src="/socket.io/socket.io.js" async="false" defer="false"></script>
 </head>
 
 <body>
@@ -46,9 +46,9 @@
             //         console.log('channel', channel, 'changed to ', value);
             //     })
         }
-        // let script = document.querySelector('script[src="/socket.io/socket.io.js"]');
-        // script && script
-        //     .addEventListener('load', onload);
+        let script = document.querySelector('script[src="/socket.io/socket.io.js"]');
+        script && script
+            .addEventListener('load', onload);
     </script>
 
 </body>
