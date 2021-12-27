@@ -29,13 +29,17 @@ gpio
         io.emit('gpio.change', { channel, value });
     });
 
-t = setInterval(function() {
-    value = gpio.read(7);
+t = setInterval(function () {
+    value = gpio.read(7, (err, value) => {
+        console.log('ERR_READ:', err, value);
+    });
     console.log('7:', value);
-    gpio.write(7, !value);
+    gpio.write(7, !value,(err, value) => {
+        console.log('ERR_WRITE:', err, value);
+    });
 });
 
-setTimeout(function() {
+setTimeout(function () {
     clearInterval(t);
     gpio.destroy()
 }, 20000)
