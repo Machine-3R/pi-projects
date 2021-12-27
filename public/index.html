@@ -36,15 +36,16 @@
     </script>
     <script>
         function onload() {
-            alert('loaded');
-            // socket = io();
-            // socket
-            //     .on("welcome", (msg) => {
-            //         console.log('server:', msg);
-            //     })
-            //     .on('gpio.change', (channel, value) => {
-            //         console.log('channel', channel, 'changed to ', value);
-            //     })
+            io && alert('io available');
+            
+            socket = io();
+            socket
+                .on("welcome", (msg) => {
+                    console.log('server:', msg);
+                })
+                .on('gpio.change', (channel, value) => {
+                    console.log('channel', channel, 'changed to ', value);
+                })
         }
         let script = document.querySelector('script[src="/socket.io/socket.io.js"]');
         script && script
