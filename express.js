@@ -30,12 +30,12 @@ gpio
     });
 
 t = setInterval(function () {
-    value = gpio.read(7, (err, value) => {
-        console.log('ERR_READ:', err, value);
+    value = gpio.read(7, function (err, value) {
+        console.log('ERR_READ:', err, 'value:', value);
     });
     console.log('7:', value);
-    gpio.write(7, !value,(err, value) => {
-        console.log('ERR_WRITE:', err, value);
+    gpio.write(7, !value, function (err, value) {
+        console.log('ERR_WRITE:', err, 'value:', value);
     });
 });
 
