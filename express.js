@@ -22,18 +22,17 @@ io
 
 gpio
     .setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
-        if (err) throw err;
+        console.log('ERR:', 7, err);
     });
-// gpio
-//     .setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, (err) => {
-//         if (err) throw err;
-//     })
-
-// gpio
-//     .on('change', (channel, value) => {
-//         console.log('channel', channel, 'changed to ', value);
-//         io.emit('gpio.change', { channel, value });
-//     })
+gpio
+    .setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, (err) => {
+        console.log('ERR:', 32, err);
+    })
+gpio
+    .on('change', (channel, value) => {
+        console.log('channel', channel, 'changed to ', value);
+        io.emit('gpio.change', { channel, value });
+    })
 
 server
     .listen(8080, () => {
