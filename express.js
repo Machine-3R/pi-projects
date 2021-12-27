@@ -21,22 +21,12 @@ io
     });
 
 gpio
-    .setup(7, gpio.DIR_LOW, async function (err) {
+    .setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, async (err) => {
         if (err) throw err;
-
-        let value = false;
-        let t = setInterval(function () {
-            value = !value;
-            gpio.write(7, value, function (err) {
-                if (err) throw err;
-                console.log('Written to pin');
-            });
-        }, 1000);
-
-        setTimeout(function () {
-            clearInterval(t);
-        }, 10000);
     });
+gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, async (err) => {
+    if (err) throw err;
+})
 
 gpio
     .on('change', async (channel, value) => {
