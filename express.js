@@ -41,6 +41,7 @@ gpiop.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH)
     })
     .catch((err) => {
         console.log('ERR:', 7, err);
+        gpiop.destroy();
     })
 gpio
     .on('change', (channel, value) => {
