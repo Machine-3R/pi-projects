@@ -34,15 +34,19 @@ io
 //         console.log('channel', channel, 'changed to ', value);
 //         io.emit('gpio.change', { channel, value });
 //     })
-gpiop.setup(7, gpio.DIR_OUT)
-    .then(()=>{
-        console.log(7, 'setup');
+gpiop.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH)
+    .then(() => {
+        console.log(7, 'setup ready');
         return gpiop.write(7, true);
     })
-    .catch((err)=>{
+    .catch((err) => {
         console.log('ERR:', 7, err);
     })
-
+gpio
+    .on('change', (channel, value) => {
+        console.log('channel', channel, 'changed to ', value);
+        io.emit('gpio.change', { channel, value });
+    })
 server
     .listen(8080, () => {
         console.log('Server started listening...');
