@@ -29,7 +29,7 @@ gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, (err) => {
 })
 
 gpio
-    .on('change', async (channel, value) => {
+    .on('change', (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
         io.emit('gpio.change', { channel, value });
     })
