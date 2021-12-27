@@ -21,10 +21,10 @@ io
     });
 
 gpio
-    .setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, async (err) => {
+    .setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
         if (err) throw err;
     });
-gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, async (err) => {
+gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, (err) => {
     if (err) throw err;
 })
 
