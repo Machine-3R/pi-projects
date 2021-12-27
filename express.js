@@ -21,7 +21,7 @@ io
     });
 
 gpio
-    .setup(7, gpio.DIR_LOW, function (err) {
+    .setup(7, gpio.DIR_LOW, async function (err) {
         if (err) throw err;
 
         let value = false;
@@ -35,13 +35,11 @@ gpio
 
         setTimeout(function () {
             clearInterval(t);
-            gpio.destroy(function (...incoming) {
-                console.log(incoming);
-            });
         }, 10000);
     });
+
 gpio
-    .on('change', (channel, value) => {
+    .on('change', async (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
         io.emit('gpio.change', { channel, value });
     })
