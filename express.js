@@ -3,6 +3,7 @@ const app = express();
 const server = require('http')
     .createServer(app);
 const io = require('socket.io')(server);
+const gpio = require('rpi-gpio');
 
 app
     .use(express.static('public'));
