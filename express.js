@@ -21,7 +21,7 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
+gpio.setup(7, gpio.DIR_OUT);
 gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH)
 gpio
     .on('change', (channel, value) => {
@@ -29,10 +29,9 @@ gpio
         io.emit('gpio.change', { channel, value });
     });
 
+    let value = false;
 t = setInterval(function () {
-    value = gpio.read(7, function (err, value) {
-        console.log('ERR_READ:', err, 'value:', value);
-    });
+    value = !value;
     console.log('7:', value);
     gpio.write(7, !value, function (err, value) {
         console.log('ERR_WRITE:', err, 'value:', value);
