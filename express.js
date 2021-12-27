@@ -23,13 +23,22 @@ io
 
 gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
 gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH)
- 
 gpio
     .on('change', (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
         io.emit('gpio.change', { channel, value });
     });
 
+t = setInterval(function() {
+    value = gpio.read(7);
+    console.log('7:', value);
+    gpio.write(7, !value);
+});
+
+setTimeout(function() {
+    clearInterval(t);
+    gpio.destroy()
+}, 20000)
 
 server
     .listen(8080, () => {
