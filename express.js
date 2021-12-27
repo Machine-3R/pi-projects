@@ -21,35 +21,16 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-// gpio
-//     .setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
-//         console.log('ERR:', 7, err);
-//     });
-// gpio
-//     .setup(32, gpio.DIR_IN, gpio.EDGE_BOTH, (err) => {
-//         console.log('ERR:', 32, err);
-//     })
-// gpio
-//     .on('change', (channel, value) => {
-//         console.log('channel', channel, 'changed to ', value);
-//         io.emit('gpio.change', { channel, value });
-//     })
-gpiop.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH)
-    .then(() => {
-        console.log(7, 'setup ready');
-        value = !gpio.read(7);
-        console.log('wrting 7: ', value);
-        return gpiop.write(7, value );
-    })
-    .catch((err) => {
-        console.log('ERR:', 7, err);
-        gpiop.destroy();
-    })
+gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
+gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH)
+ 
 gpio
     .on('change', (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
         io.emit('gpio.change', { channel, value });
-    })
+    });
+
+
 server
     .listen(8080, () => {
         console.log('Server started listening...');
