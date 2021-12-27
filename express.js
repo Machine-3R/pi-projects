@@ -21,9 +21,29 @@ io
     });
 
 gpio
+    .setup(7, gpio.DIR_LOW, function (err) {
+        if (err) throw err;
+
+        let value = false;
+        let t = setInterval(function () {
+            value = !value;
+            gpio.write(7, value, function (err) {
+                if (err) throw err;
+                console.log('Written to pin');
+            });
+        }, 1000);
+
+        setTimeout(function () {
+            clearInterval(t);
+            gpio.destroy(function (...incoming) {
+                console.log(incoming);
+            });
+        }, 10000);
+    });
+gpio
     .on('change', (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
-        io.emit('gpio.change', {channel, value});
+        io.emit('gpio.change', { channel, value });
     })
 
 server
