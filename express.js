@@ -26,7 +26,7 @@ gpio.setup(7, gpio.DIR_OUT, (err) => {
 
     let value = false;
     t = setInterval(function () {
-        value = !value;
+        value = !gpio.read(7,(err, value)=>{return value;});
         console.log('7:', value);
         gpio.write(7, !value);
     }, 1000);
