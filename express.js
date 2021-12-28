@@ -21,7 +21,7 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-gpiop.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH)
+gpiop.setup(7, gpio.DIR_OUT)
     .then(() => {
         let value = false;
         t = setInterval(function () {
