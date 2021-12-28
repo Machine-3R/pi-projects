@@ -21,7 +21,7 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-gpio.setup(7, gpio.DIR_OUT, (err) => {
+gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
     if (err) { throw err; };
 
     let value = false;
