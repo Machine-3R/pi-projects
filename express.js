@@ -22,23 +22,23 @@ io
     });
 
 { // pin 7 led blink
-    // gpio.setup(7, gpio.DIR_OUT);
-    // let value = false;
-    // t1 = setInterval(function () {
-    //     gpio.read(7, function (err, data) {
-    //         console.log('7:', value);
-    //         value = !data;
-    //     });
-    //     gpio.write(7, value);
-    //     gpio.emit('change', 7, value);
-    // }, 1000);
+    gpio.setup(7, gpio.DIR_OUT);
+    let value = false;
+    t1 = setInterval(function () {
+        gpio.read(7, function (err, data) {
+            console.log('7:', value);
+            value = !data;
+        });
+        gpio.write(7, value);
+        gpio.emit('change', 7, value);
+    }, 1000);
 
-    // setTimeout(function () {
-    //     clearInterval(t1);
-    //     console.log('cleared interval.');
-    //     gpio.reset();
-    //     console.log('gpio reset.')
-    // }, 10000);
+    setTimeout(function () {
+        clearInterval(t1);
+        console.log('cleared interval.');
+        gpio.reset();
+        console.log('gpio reset.')
+    }, 10000);
 }
 { // steppermotor
     gpio.setup(18, gpio.DIR_OUT);
