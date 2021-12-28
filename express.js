@@ -39,11 +39,11 @@ io
 //         gpio.reset()
 //     }, 20000)
 // });
-gpio.setup(7, gpio.DIR_OUT);
-gpio.read(7, function (err, value) {
-    console.log('read: 7:', err, value);
-    return value;
-});
+gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
+// gpio.read(7, function (err, value) {
+//     console.log('read: 7:', err, value);
+//     return value;
+// });
 
 let value = false;
 t = setInterval(function () {
