@@ -38,7 +38,7 @@ setTimeout(function () {
     console.log('cleared interval.');
     gpio.reset();
     console.log('gpio reset.')
-}, 20000);
+}, 10000);
 
 //gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
 
