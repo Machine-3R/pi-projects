@@ -22,23 +22,24 @@ io
     });
 
 gpio.setup(7, gpio.DIR_OUT);
+{ // pin 7 led blink
+    let value = false;
+    t = setInterval(function () {
+        gpio.read(7, function (err, data) {
+            console.log('7:', value);
+            value = !data;
+        });
+        gpio.write(7, value);
+        gpio.emit('change', 7, value);
+    }, 1000);
 
-let value = false;
-t = setInterval(function () {
-    gpio.read(7, function (err, data) {
-        console.log('7:', value);
-        value = !data;
-    });
-    gpio.write(7, value);
-    gpio.emit('change', 7, value);
-}, 1000);
-
-setTimeout(function () {
-    clearInterval(t);
-    console.log('cleared interval.');
-    gpio.reset();
-    console.log('gpio reset.')
-}, 10000);
+    setTimeout(function () {
+        clearInterval(t);
+        console.log('cleared interval.');
+        gpio.reset();
+        console.log('gpio reset.')
+    }, 10000);
+}
 
 //gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
 
