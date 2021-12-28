@@ -21,24 +21,6 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-// gpio.setup(7, gpio.DIR_OUT, (err) => {
-//     err && console.log('ERR:', err);
-//     console.log(7, gpio.read(7, function(err, value){
-//         console.log('read: 7:', err, value);
-//     }));
-
-//     let value = false;
-//     t = setInterval(function () {
-//         value = !value;
-//         console.log('7:', value);
-//         gpio.write(7, !value);
-//     }, 1000);
-
-//     setTimeout(function () {
-//         clearInterval(t);
-//         gpio.reset()
-//     }, 20000)
-// });
 gpio.setup(7, gpio.DIR_OUT);
 
 let value = false;
