@@ -22,7 +22,7 @@ io
     });
 
 gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
-    if (err) { throw err; };
+    err && console.log('ERR:', err);
 
     let value = false;
     t = setInterval(function () {
@@ -35,9 +35,9 @@ gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
         clearInterval(t);
         gpio.reset()
     }, 20000)
-
 });
 //gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
+
 gpio
     .on('change', (channel, value) => {
         console.log('channel', channel, 'changed to ', value);
