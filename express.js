@@ -21,7 +21,7 @@ io
         socket.emit('welcome', 'Welcome on this server.');
     });
 
-gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
+gpio.setup(7, gpio.DIR_OUT, (err) => {
     err && console.log('ERR:', err);
 
     let value = false;
@@ -36,7 +36,13 @@ gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH, (err) => {
         gpio.reset()
     }, 20000)
 });
-//gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
+gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
+gpio.listen(7, (err) => {
+    err && console.log('ERR_LISTEN:', 7, err);
+    console.log(7, gpio.read(7, (err, value) => {
+        return value;
+    }));
+});
 
 gpio
     .on('change', (channel, value) => {
