@@ -39,22 +39,23 @@ io
 //         gpio.reset()
 //     }, 20000)
 // });
-gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
-// gpio.read(7, function (err, value) {
-//     console.log('read: 7:', err, value);
-//     return value;
-// });
+gpio.setup(7, gpio.DIR_OUT);
 
 let value = false;
 t = setInterval(function () {
-    value = !value;
-    console.log('7:', value);
-    gpio.write(7, !value);
+    gpio.read(7, function (err, data) {
+        console.log('7:', value);
+        value = !data;
+    });
+    gpio.write(7, value);
+    gpio.emit('change', 7, value);
 }, 1000);
 
 setTimeout(function () {
     clearInterval(t);
-    gpio.reset()
+    console.log('cleared interval.');
+    gpio.reset();
+    console.log('gpio reset.')
 }, 20000);
 
 //gpio.setup(32, gpio.DIR_IN, gpio.EDGE_BOTH);
