@@ -40,9 +40,6 @@ io
 //     }, 20000)
 // });
 gpio.setup(7, gpio.DIR_OUT)
-console.log(7, gpio.read(7, function (err, value) {
-    console.log('read: 7:', err, value);
-}));
 
 let value = false;
 t = setInterval(function () {
@@ -53,6 +50,9 @@ t = setInterval(function () {
 
 setTimeout(function () {
     clearInterval(t);
+    console.log(7, gpio.read(7, function (err, value) {
+        console.log('read: 7:', err, value);
+    }));
     gpio.reset()
 }, 20000);
 
