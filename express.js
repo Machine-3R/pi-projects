@@ -30,7 +30,7 @@ gpiop.setup(7, gpio.DIR_OUT)
             gpio.write(7, !value, function (err, value) {
                 console.log('ERR_WRITE:', err, 'value:', value);
             });
-        });
+        }, 1000);
 
         setTimeout(function () {
             clearInterval(t);
