@@ -36,7 +36,9 @@ gpiop.setup(7, gpio.DIR_OUT)
             clearInterval(t);
             gpio.reset()
         }, 20000)
-        return
+        
+    }, (reason)=>{
+        console.log(reason);
     })
     .catch((err) => {
         console.log(err);
@@ -47,8 +49,7 @@ gpio
         console.log('channel', channel, 'changed to ', value);
         io.emit('gpio.change', { channel, value });
     });
-
-
+console.log('gpio events set');
 server
     .listen(8080, () => {
         console.log('Server started listening...');
