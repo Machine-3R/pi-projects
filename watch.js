@@ -70,7 +70,7 @@ setTimeout(function () {
         setTimeout(function () {
             clearInterval(t);
             gpio.destroy();
-        }, 10000);
+        }, 10500);
     });
 
 }, 10000);
