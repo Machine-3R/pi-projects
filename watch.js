@@ -2,9 +2,13 @@ const chokidar = require('chokidar');
 
 let FSWatcher = chokidar.watch('/sys/class/gpio/**/*', {
     persistent: true, // default: true
-    ignored: /(^|[\/\\])\../, // ignore dotfiles
     ignoreInitial: false, // fire events for addDir and unlinkDir
     followSymlinks: true,
+    ignored: [
+        /(^|[\/\\])\../, // ignore dotfiles
+        '/sys/class/gpio/gpiochip0/', // GPIO controller
+        '/sys/class/gpio/gpiochip100/'// GPIO controller
+    ]
 });
 
 FSWatcher
@@ -15,19 +19,19 @@ FSWatcher
     //     console.log('all:', event, path, stats);
     // })
     .on('add', (path, stats) => {
-        console.log('added file:', path, stats);
+        console.log('added file:', path);
     })
     .on('change', (path, stats) => {
-        console.log('changed file:', path, stats);
+        console.log('changed file:', path);
     })
     .on('unlink', (path) => {
-        console.log('deleted file:', path);
+        console.log('deleted file:');
     })
     .on('addDir', (path, stats) => {
-        console.log('added dir:', path, stats);
+        console.log('added dir:', path);
     })
     .on('unlinkDir', (path, stats, extra) => {
-        console.log('deleted dir:', path, stats, extra);
+        console.log('deleted dir:', path);
     })
     .on('error', (err) => {
         console.log('error:', err);
