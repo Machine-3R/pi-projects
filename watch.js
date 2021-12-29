@@ -18,9 +18,9 @@ FSWatcher
     .on('ready', () => {
         console.log('ready');
     })
-    // .on('all', (event, path, stats) => {
-    //     console.log('all:', event, path, stats);
-    // })
+    .on('all', (event, path, stats) => {
+        console.log('all:', event, path);
+    })
     .on('add', (path, stats) => {
         console.log('added file:', path);
     })
