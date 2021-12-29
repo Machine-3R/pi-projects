@@ -19,6 +19,7 @@
     "homepage": "https://github.com/Machine-3R/pi-projects#readme",
     "dependencies": {
         "bufferutil": "^4.0.1",
+        "chokidar": "^3.5.2",
         "express": "^4.17.2",
         "gpio-stream": "^1.0.17",
         "open": "^8.4.0",
