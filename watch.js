@@ -69,8 +69,7 @@ setTimeout(function () {
 
         setTimeout(function () {
             clearInterval(t);
-            gpio.reset();
-            process.kill(process.pid, 'SIGTERM');
+            gpio.destroy();
         }, 10000);
     });
 
