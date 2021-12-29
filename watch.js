@@ -1,4 +1,5 @@
 const chokidar = require('chokidar');
+const fs = require('fs');
 
 let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
     persistent: true, // default: true
@@ -24,7 +25,9 @@ FSWatcher
         console.log('added file:', path);
     })
     .on('change', (path, stats) => {
-        console.log('changed file:', path);
+        fs.readFile(path, 'utf8', (err, data) => {
+            console.log('changed file:', path, '=>', data);
+        });
     })
     .on('unlink', (path) => {
         console.log('deleted file:');
