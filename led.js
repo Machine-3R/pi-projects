@@ -14,8 +14,6 @@ gpio.setup(7, gpio.DIR_LOW, function (err) {
 
     setTimeout(function () {
         clearInterval(t);
-        gpio.destroy(function(...incoming) {
-            console.log(incoming);
-        });
+        gpio.reset();
     }, 10000);
 });
