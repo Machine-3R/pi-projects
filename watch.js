@@ -6,8 +6,8 @@ let FSWatcher = chokidar.watch('/sys/class/gpio/**/*', {
     followSymlinks: true,
     ignored: [
         /(^|[\/\\])\../, // ignore dotfiles
-        '/sys/class/gpio/gpiochip0/', // GPIO controller
-        '/sys/class/gpio/gpiochip100/'// GPIO controller
+        '/sys/class/gpio/gpiochip0', // GPIO controller
+        '/sys/class/gpio/gpiochip100'// GPIO controller
     ]
 });
 
