@@ -8,7 +8,7 @@ gpio.setup(7, gpio.DIR_LOW, function (err) {
         value = !value;
         gpio.write(7, value, function (err) {
             if (err) throw err;
-            console.log('Written to pin');
+            console.log('Written to pin 7:', value);
         });
     }, 1000);
 
