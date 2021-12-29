@@ -16,7 +16,7 @@ let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
 
 FSWatcher
     .on('ready', () => {
-        console.log('ready');
+        console.log('ready', FSWatcher.getWatched());
     })
     .on('all', (event, path, stats) => {
         console.log('all:', event, path);
@@ -51,23 +51,27 @@ FSWatcher
     })
     ;
 
-var gpio = require('rpi-gpio');
+// delayed led blinking
+setTimeout(function () {
+    var gpio = require('rpi-gpio');
 
-gpio.setup(7, gpio.DIR_LOW, function (err) {
-    if (err) throw err;
+    gpio.setup(7, gpio.DIR_LOW, function (err) {
+        if (err) throw err;
 
-    let value = false;
-    let t = setInterval(function () {
-        value = !value;
-        gpio.write(7, value, function (err) {
-            if (err) throw err;
-            console.log('Written to pin 7:', value);
-        });
-    }, 1000);
+        let value = false;
+        let t = setInterval(function () {
+            value = !value;
+            gpio.write(7, value, function (err) {
+                if (err) throw err;
+                console.log('Written to pin 7:', value);
+            });
+        }, 1000);
 
-    setTimeout(function () {
-        clearInterval(t);
-        gpio.reset();
-        process.kill(process.pid, 'SIGTERM');
-    }, 10000);
-});
+        setTimeout(function () {
+            clearInterval(t);
+            gpio.reset();
+            process.kill(process.pid, 'SIGTERM');
+        }, 10000);
+    });
+
+}, 10000);
