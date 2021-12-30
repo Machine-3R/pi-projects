@@ -19,7 +19,7 @@ let ready = false;
 let FSWatcher = chokidar.watch(dir, options);
 FSWatcher
     .on('ready', () => {
-        console.log('ready', FSWatcher.getWatched());
+        console.log('ready', FSWatcher.getWatched()['/sys/class/gpio']);
         ready = true;
     })
     // .on('all', (event, path, stats) => {
