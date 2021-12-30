@@ -9,6 +9,7 @@ class Spy {
             .watch('/sys/class/gpio/gpio*/*', {
                 persistence: true,
                 ignored: [
+                    '/sys/class/gpio/gpiochip*'
                 ],
                 ignoreInitial: true,
                 followSymlinks: false,
