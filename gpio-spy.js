@@ -16,7 +16,6 @@ class Spy {
                 followSymlinks: false,
             })
             .on('ready', ()=> {
-                console.log(this);
                  let watched = this.watcher.getWatched();
                  console.log('watched:', watched);
                  let gpios = watched['/sys/class/gpio'];
