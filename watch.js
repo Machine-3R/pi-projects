@@ -1,9 +1,8 @@
 const chokidar = require('chokidar');
-const fs = require('fs');
 
 let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
     persistent: true, // default: true
-    ignoreInitial: true, // fire events for addDir and unlinkDir
+    ignoreInitial: false, // fire events for addDir and unlinkDir
     followSymlinks: true,
     ignored: [
         /(^|[\/\\])\../, // ignore dotfiles
@@ -69,7 +68,8 @@ setTimeout(function () {
 
         setTimeout(function () {
             clearInterval(t);
-            gpio.destroy();
+            // gpio.destroy(() => {
+            // });
         }, 10500);
     });
 
