@@ -30,12 +30,19 @@ class Spy extends EventEmitter {
                 cwd: '/sys/class/gpio'
             })
             .on('ready', () => {
-//                console.log('watched:', this.watcher.getWatched());
+                //                console.log('watched:', this.watcher.getWatched());
                 let gpios = this.watcher.getWatched()['.'];
-//                console.log('gpios:', gpios);
+                //                console.log('gpios:', gpios);
                 gpios.forEach((name) => {
                     let gpio = parseInt(name.slice(4));
-                    this.pins.add(new Pin(gpio));
+                    let direction = fs.readFileSync('/sys/class/gpio/' + name + '/direction','utf8');
+                    let value = fs.readFileSync('/sys/class/gpio/' + name + '/value','utf8');
+                    
+                    this.pins.add(new Pin(
+                        gpio,
+                        direction,
+                        value
+                    ));
                 });
                 this.ready = true;
                 this.emit('ready');
@@ -66,14 +73,15 @@ class Spy extends EventEmitter {
 }
 
 class Pin {
-    static DIR_IN = 'in';
-    static DIR_OUT = 'out';
     constructor(gpio, direction, value) {
+        console.log(gpio,direction,value);
         this.gpio = 1 && gpio || null;
         this.direction = [Pin.DIR_IN, Pin.DIR_OUT].indexOf(direction) !== -1 ? direction : null;
         this.value = !!value ? 1 : 0;
     }
 }
+Pin.DIR_IN = 'in';
+Pin.DIR_OUT = 'out';
 
 module.exports = {
     Spy
