@@ -12,13 +12,14 @@ class Spy {
                 ignored: [
                     '/sys/class/gpio/gpiochip*'
                 ],
-                ignoreInitial: false,
+                ignoreInitial: true,
                 followSymlinks: false,
+                cwd: '/sys/class/gpio'
             })
             .on('ready', ()=> {
                  let watched = this.watcher.getWatched();
                  console.log('watched:', watched);
-                 let gpios = watched['/sys/class/gpio'];
+                 let gpios = watched['.'];
                  console.log('gpios:', gpios);
                  this.ready = true;
             })
