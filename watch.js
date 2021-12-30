@@ -11,8 +11,8 @@ let options = {
         /(^|[\/\\])\../, // ignore dotfiles
         '/sys/class/gpio/gpiochip0', // GPIO controller
         '/sys/class/gpio/gpiochip100',// GPIO controller
-        /\/sys\/class\/gpio\/gpio.*\/device/,
-        /\/sys\/class\/gpio\/gpio.*\/subsystem/,
+        /\/sys\/class\/gpio\/gpio\d*\/device/,
+        /\/sys\/class\/gpio\/gpio\d*\/subsystem/,
     ]
 };
 let ready = false;
