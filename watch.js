@@ -5,6 +5,7 @@ let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
     persistent: true, // default: true
     ignoreInitial: false, // fire events for addDir and unlinkDir
     followSymlinks: true,
+    events: 'add,change,unlink,addDir,unlinkDir,error',
     ignored: [
         /(^|[\/\\])\../, // ignore dotfiles
         '/sys/class/gpio/gpiochip0', // GPIO controller
