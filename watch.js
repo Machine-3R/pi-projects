@@ -1,4 +1,5 @@
 const chokidar = require('chokidar');
+const fs = require('fs');
 
 let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
     persistent: true, // default: true
