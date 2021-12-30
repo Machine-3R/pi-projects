@@ -40,8 +40,8 @@ class Spy extends EventEmitter {
                     
                     this.pins.add(new Pin(
                         gpio,
-                        direction,
-                        value
+                        direction.trim(),
+                        value.trim()
                     ));
                 });
                 this.ready = true;
