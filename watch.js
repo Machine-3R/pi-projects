@@ -9,23 +9,25 @@ let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
         /(^|[\/\\])\../, // ignore dotfiles
         '/sys/class/gpio/gpiochip0', // GPIO controller
         '/sys/class/gpio/gpiochip100',// GPIO controller
-        /\/sys\/class\/gpio\/gpio.\/device/,
-        /\/sys\/class\/gpio\/gpio.\/subsystem/,
+        /\/sys\/class\/gpio\/gpio.*\/device/,
+        /\/sys\/class\/gpio\/gpio.*\/subsystem/,
     ]
 });
-
+let ready = false;
 FSWatcher
     .on('ready', () => {
         console.log('ready', FSWatcher.getWatched());
+        ready = true;
     })
-    .on('all', (event, path, stats) => {
-        console.log('all:', event, path);
-    })
+    // .on('all', (event, path, stats) => {
+    //     console.log('all:', event, path);
+    // })
     .on('add', (path, stats) => {
-        console.log('added file:', path);
+        console.log('added file:',ready, path);
     })
     .on('change', (path, stats) => {
         fs.readFile(path, 'utf8', (err, data) => {
+            if (err) throw err;
             console.log('changed file:', path, '=>', data);
         });
     })
@@ -71,6 +73,7 @@ setTimeout(function () {
             clearInterval(t);
             // gpio.destroy(() => {
             // });
+            process.kill(process.pid,'SIGTERM');
         }, 10500);
     });
 
