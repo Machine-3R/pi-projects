@@ -2,16 +2,14 @@ const chokidar = require('chokidar');
 const fs = require('fs');
 
 class Pin {
-    nr = null;
-    gpio = null; //
-    active_low = 0; // opts: 0,1
-    direction = 'IN'; // opts: IN,OUT
-    edge = 'NONE'; //opts: NONE,RISING,FALLING,BOTH
-    uevent = ''
-
+    constructor(gpio, direction, value) {
+        this.gpio = parseInt(gpio) || '';
+        this.direction = direction || 'in';
+        this.value = ''+parseInt(value) || '0';
+    }
 }
 
-let dir = '/sys/class/gpio/gpio*/value';
+let dir = '/sys/class/gpio/gpio*/*';
 let options = {
     persistent: true, // default: true
     ignoreInitial: false, // fire events for addDir and unlinkDir
@@ -23,6 +21,9 @@ let options = {
         '/sys/class/gpio/gpiochip100',// GPIO controller
         /\/sys\/class\/gpio\/gpio\d*\/device/,
         /\/sys\/class\/gpio\/gpio\d*\/subsystem/,
+        /\/sys\/class\/gpio\/gpio\d*\/uevent/,
+        /\/sys\/class\/gpio\/gpio\d*\/active_low/,
+        /\/sys\/class\/gpio\/gpio\d*\/edge/,
     ]
 };
 let ready = false;
