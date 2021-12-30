@@ -4,6 +4,7 @@ const path = require('path');
 
 class Spy {
     constructor() {
+        this.ready = false;
         this.pins = [];
         this.watcher = chokidar
             .watch('/sys/class/gpio/gpio*/*', {
@@ -20,9 +21,10 @@ class Spy {
                  console.log('watched:', watched);
                  let gpios = watched['/sys/class/gpio'];
                  console.log('gpios:', gpios);
+                 this.ready = true;
             })
             .on('add', (path) => {
-                console.log('added file:', ready, path);
+                console.log('added file:', this.ready, path);
             })
             .on('change', (path) => {
                 console.log('changed file:', path);
