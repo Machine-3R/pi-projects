@@ -26,13 +26,13 @@ FSWatcher
     .on('add', (path, stats) => {
         fs.readFile(path, 'utf8', (err, data) => {
             if (err) throw err;
-            console.log('added file:', ready, path, '=>', data);
+            console.log('added file:', ready, path, '=>', data.trim());
         });
     })
     .on('change', (path, stats) => {
         fs.readFile(path, 'utf8', (err, data) => {
             if (err) throw err;
-            console.log('changed file:', path, '=>', data);
+            console.log('changed file:', path, '=>', data.trim());
         });
     })
     .on('unlink', (path) => {
