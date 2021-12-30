@@ -1,7 +1,17 @@
 const chokidar = require('chokidar');
 const fs = require('fs');
 
-let dir = '/sys/class/gpio/gpio*/*';
+class Pin {
+    nr = null;
+    gpio = null; //
+    active_low = 0; // opts: 0,1
+    direction = 'IN'; // opts: IN,OUT
+    edge = 'NONE'; //opts: NONE,RISING,FALLING,BOTH
+    uevent = ''
+
+}
+
+let dir = '/sys/class/gpio/gpio*/value';
 let options = {
     persistent: true, // default: true
     ignoreInitial: false, // fire events for addDir and unlinkDir
