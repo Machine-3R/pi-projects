@@ -1,11 +1,24 @@
 const chokidar = require('chokidar');
 const fs = require('fs');
 const path = require('path');
+const EventEmitter = require('events').EventEmitter;
 
-class Spy {
+class Spy extends EventEmitter {
     constructor() {
+        super();
         this.ready = false;
-        this.pins = [];
+        this.pins = {
+            stack: [],
+            add(pin) {
+                if (!(pin instanceof Pin)) throw 'Pin object expected.';
+                !this.get(pin.gpio) || this.stack.push(pin);
+            },
+            get(gpio) {
+                return this.stack.filter((pin) => {
+                    return pin.gpio === gpio;
+                });
+            }
+        };
         this.watcher = chokidar
             .watch('/sys/class/gpio/gpio*/*', {
                 persistence: true,
@@ -16,12 +29,16 @@ class Spy {
                 followSymlinks: false,
                 cwd: '/sys/class/gpio'
             })
-            .on('ready', ()=> {
-                 let watched = this.watcher.getWatched();
-                 console.log('watched:', watched);
-                 let gpios = watched['.'];
-                 console.log('gpios:', gpios);
-                 this.ready = true;
+            .on('ready', () => {
+//                console.log('watched:', this.watcher.getWatched());
+                let gpios = this.watcher.getWatched()['.'];
+//                console.log('gpios:', gpios);
+                gpios.forEach((name) => {
+                    let gpio = parseInt(name.slice(4));
+                    this.pins.add(new Pin(gpio));
+                });
+                this.ready = true;
+                this.emit('ready');
             })
             .on('add', (path) => {
                 console.log('added file:', this.ready, path);
@@ -42,13 +59,19 @@ class Spy {
                 console.log('ERROR:', err);
             });
     }
+
+    getPins() {
+        return this.pins.stack;
+    }
 }
 
 class Pin {
+    static DIR_IN = 'in';
+    static DIR_OUT = 'out';
     constructor(gpio, direction, value) {
-        this.gpio = parseInt(gpio) || null;
-        this.direction = direction || 'in';
-        this.value = '' + parseInt(value) || '0';
+        this.gpio = 1 && gpio || null;
+        this.direction = [Pin.DIR_IN, Pin.DIR_OUT].indexOf(direction) !== -1 ? direction : null;
+        this.value = !!value ? 1 : 0;
     }
 }
 
