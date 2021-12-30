@@ -12,7 +12,7 @@ class Spy {
                 ignored: [
                     '/sys/class/gpio/gpiochip*'
                 ],
-                ignoreInitial: true,
+                ignoreInitial: false,
                 followSymlinks: false,
             })
             .on('ready', ()=> {
