@@ -1,7 +1,8 @@
 const chokidar = require('chokidar');
 const fs = require('fs');
 
-let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
+let dir = '/sys/class/gpio/gpio*/*';
+let options = {
     persistent: true, // default: true
     ignoreInitial: false, // fire events for addDir and unlinkDir
     followSymlinks: true,
@@ -13,8 +14,9 @@ let FSWatcher = chokidar.watch('/sys/class/gpio/gpio*/*', {
         /\/sys\/class\/gpio\/gpio.*\/device/,
         /\/sys\/class\/gpio\/gpio.*\/subsystem/,
     ]
-});
+};
 let ready = false;
+let FSWatcher = chokidar.watch(dir, options);
 FSWatcher
     .on('ready', () => {
         console.log('ready', FSWatcher.getWatched());
@@ -24,13 +26,13 @@ FSWatcher
     //     console.log('all:', event, path);
     // })
     .on('add', (path, stats) => {
-        fs.readFile(path, 'utf8', (err, data) => {
+        fs.readFileSync(path, 'utf8', (err, data) => {
             if (err) throw err;
             console.log('added file:', ready, path, '=>', data.trim());
         });
     })
     .on('change', (path, stats) => {
-        fs.readFile(path, 'utf8', (err, data) => {
+        fs.readFileSync(path, 'utf8', (err, data) => {
             if (err) throw err;
             console.log('changed file:', path, '=>', data.trim());
         });
