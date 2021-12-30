@@ -3,17 +3,17 @@ const fs = require('fs');
 const path = require('path');
 
 class Spy {
-    watcher = chokidar
-        .watch('/sys/class/gpio/gpio*/*', {
-            persistence: true,
-            ignored: [
-                '/sys/class/gpio/gpiochip*'
-            ],
-            ignoreInitial: true,
-            followSymlinks: false,
-        });
     constructor() {
         this.pins = [];
+        this.watcher = chokidar
+            .watch('/sys/class/gpio/gpio*/*', {
+                persistence: true,
+                ignored: [
+                    '/sys/class/gpio/gpiochip*'
+                ],
+                ignoreInitial: true,
+                followSymlinks: false,
+            });
         this.watcher
             .on('ready', function () {
                 let watched = this.getWatched();
