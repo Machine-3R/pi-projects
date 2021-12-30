@@ -24,7 +24,10 @@ FSWatcher
     //     console.log('all:', event, path);
     // })
     .on('add', (path, stats) => {
-        console.log('added file:',ready, path);
+        fs.readFile(path, 'utf8', (err, data) => {
+            if (err) throw err;
+            console.log('added file:', ready, path, '=>', data);
+        });
     })
     .on('change', (path, stats) => {
         fs.readFile(path, 'utf8', (err, data) => {
