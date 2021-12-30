@@ -13,13 +13,13 @@ class Spy {
                 ],
                 ignoreInitial: true,
                 followSymlinks: false,
-            });
-        this.watcher
-            .on('ready', function () {
-                let watched = this.getWatched();
-                console.log('watched:', watched);
-                let gpios = watched['/sys/class/gpio'];
-                console.log('gpios:', gpios);
+            })
+            .on('ready', ()=> {
+                console.log(this);
+                 let watched = this.watcher.getWatched();
+                 console.log('watched:', watched);
+                 let gpios = watched['/sys/class/gpio'];
+                 console.log('gpios:', gpios);
             })
             .on('add', (path) => {
                 console.log('added file:', ready, path);
