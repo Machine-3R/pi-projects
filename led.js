@@ -1,6 +1,6 @@
 var gpio = require('rpi-gpio');
 
-gpio.setup(7, gpio.DIR_LOW, function (err) {
+gpio.setup(7, gpio.DIR_OUT, function (err) {
     if (err) throw err;
 });
 
