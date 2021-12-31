@@ -6,7 +6,6 @@ let FSWatcher = chokidar
         persistent: true, // default: true
         ignoreInitial: true,
         ignored: [
-            //            /(^|[\/\\])\../, // ignore dotfiles
             '/sys/class/gpio/gpiochip*', // GPIO controller
             '/sys/class/gpio/*xport',
             '/sys/class/gpio/gpio*/device',
@@ -19,6 +18,9 @@ let FSWatcher = chokidar
     })
     .on('all', function (event, path, stats) {
         console.log('all:', event, path);
+    })
+    .on('addDir', function (path) {
+        console.log('addDir:', path);
     })
     .on('error', function (err) {
         console.log('error:', err);
