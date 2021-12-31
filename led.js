@@ -1,5 +1,9 @@
 var gpio = require('rpi-gpio');
 
+gpio.on('change',(channel, value) =>{
+    console.log('channel:', channel, 'value:', value);
+});
+
 gpio.setup(7, gpio.DIR_OUT, function (err) {
     if (err) throw err;
 });
@@ -12,7 +16,6 @@ let t = setInterval(function () {
         console.log('GPIO4 (pin 7):', value);
     });
 }, 1000);
-
 setTimeout(function () {
     clearInterval(t);
     gpio.destroy((err) => {
