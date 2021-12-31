@@ -2,7 +2,7 @@ const chokidar = require('chokidar');
 const fs = require('fs');
 
 let FSWatcher = chokidar
-    .watch('/sys/class/gpio/*', {
+    .watch(['/sys/class/gpio/','/sys/class/gpio/gpio*/value'], {
         persistent: true, // default: true
         ignoreInitial: true,
         ignored: [
