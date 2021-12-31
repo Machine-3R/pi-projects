@@ -2,7 +2,7 @@ const chokidar = require('chokidar');
 const fs = require('fs');
 
 let FSWatcher = chokidar
-    .watch('/sys/class/gpio/gpio*/*', {
+    .watch('/sys/class/gpio/', {
         persistent: true, // default: true
         ignoreInitial: true, // fire events for addDir and unlinkDir
         followSymlinks: true,
@@ -10,6 +10,7 @@ let FSWatcher = chokidar
         ignored: [
             /(^|[\/\\])\../, // ignore dotfiles
             '/sys/class/gpio/gpiochip*', // GPIO controller
+            '/sys/class/gpio/*xport',
             /\/sys\/class\/gpio\/gpio\d*\/device/,
             /\/sys\/class\/gpio\/gpio\d*\/subsystem/,
             // /\/sys\/class\/gpio\/gpio\d*\/uevent/,
