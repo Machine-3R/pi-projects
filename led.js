@@ -14,8 +14,8 @@ gpio.setup(7, gpio.DIR_LOW, function (err) {
 
     setTimeout(function () {
         clearInterval(t);
-        gpio.destroy(()=>{
-            console.log('')
+        gpio.destroy((err)=>{
+            console.log(err);
         });
         process.kill(process.pid, 'SIGTERM');
     }, 10000);
