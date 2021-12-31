@@ -2,11 +2,11 @@ const chokidar = require('chokidar');
 const fs = require('fs');
 
 let FSWatcher = chokidar
-    .watch(['/sys/class/gpio/','/sys/class/gpio/gpio*/value'], {
+    .watch('.', {
         persistent: true, // default: true
         ignoreInitial: true,
         ignored: [
-//            /(^|[\/\\])\../, // ignore dotfiles
+            //            /(^|[\/\\])\../, // ignore dotfiles
             '/sys/class/gpio/gpiochip*', // GPIO controller
             '/sys/class/gpio/*xport',
             '/sys/class/gpio/gpio*/device',
@@ -14,10 +14,10 @@ let FSWatcher = chokidar
         ],
         cwd: '/sys/class/gpio'
     })
-    .on('ready', function() {
+    .on('ready', function () {
         console.log('ready', this.getWatched());
     })
-    .on('all', function(event, path, stats) {
+    .on('all', function (event, path, stats) {
         console.log('all:', event, path);
     })
     .on('error', function (err) {
