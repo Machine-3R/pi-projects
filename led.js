@@ -4,9 +4,7 @@ gpio.on('change',(channel, value) =>{
     console.log('channel:', channel, 'value:', value);
 });
 
-gpio.setup(7, gpio.DIR_OUT, function (err) {
-    if (err) throw err;
-});
+gpio.setup(7, gpio.DIR_OUT, gpio.EDGE_BOTH);
 
 let value = false;
 let t = setInterval(function () {
