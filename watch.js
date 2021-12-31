@@ -4,28 +4,23 @@ const fs = require('fs');
 let FSWatcher = chokidar
     .watch('/sys/class/gpio/', {
         persistent: true, // default: true
-        ignoreInitial: true, // fire events for addDir and unlinkDir
-        followSymlinks: true,
-        events: 'add,change,unlink,addDir,unlinkDir,error',
+        ignoreInitial: true,
         ignored: [
-            /(^|[\/\\])\../, // ignore dotfiles
+//            /(^|[\/\\])\../, // ignore dotfiles
             '/sys/class/gpio/gpiochip*', // GPIO controller
             '/sys/class/gpio/*xport',
-            /\/sys\/class\/gpio\/gpio\d*\/device/,
-            /\/sys\/class\/gpio\/gpio\d*\/subsystem/,
-            // /\/sys\/class\/gpio\/gpio\d*\/uevent/,
-            // /\/sys\/class\/gpio\/gpio\d*\/active_low/,
-            // /\/sys\/class\/gpio\/gpio\d*\/edge/,
+            '/sys/class/gpio/gpio*/device',
+            '/sys/class/gpio/gpio*/subsystem',
         ],
         cwd: '/sys/class/gpio'
     })
-    .on('ready', () => {
-        console.log('ready', FSWatcher.getWatched());
+    .on('ready', function() {
+        console.log('ready', this.getWatched());
     })
-    .on('all', (event, path, stats) => {
+    .on('all', function(event, path, stats) {
         console.log('all:', event, path);
     })
-    .on('error', (err) => {
+    .on('error', function (err) {
         console.log('error:', err);
         /** known error on unlinking empty dir */
         // Error: EPERM: operation not permitted, watch
