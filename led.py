@@ -12,5 +12,5 @@ value = False
 while True:                     # Run forever
     print('GPIO4 (pin7)::',value)
     sleep(1)                    # Sleep for 1 second
-    GPIO.output(7, value)   # Turn on
     value = not value
+    GPIO.output(7, value)   # Turn on
