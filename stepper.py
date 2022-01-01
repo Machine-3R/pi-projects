@@ -1,8 +1,11 @@
 import time
 import sys
-from gpiozero import OutputDevice
+from gpiozero import Device,OutputDevice
+from gpiozero.pins.mock import MockFactory
+
 import threading
 from functools import wraps
+
 def delay(delay=0.):
     """
     Decorator delaying the execution of a function for a while.
@@ -97,7 +100,8 @@ class Stepper:
         self.isStarted = False
 # end class Stepper
 
-        
+#Device.pin_factory = MockFactory()
+
 stepper = Stepper(25, 8, 7, 1)
 timer = Timer()
 def stop():
