@@ -101,14 +101,14 @@ class Stepper:
 stepper = Stepper(25, 8, 7, 1)
 timer = Timer()
 def stop():
-    print('stopped.')
     stepper.stop()
+    print('stopped.')
 def start():
-    print('started.')
     stepper.start()
+    print('started.')
 def mode(mode):
-    print('set mode:', mode)
     stepper.mode(mode)
+    print('set mode:', mode)
 
 def mode0():
     stepper.mode(0)
@@ -118,7 +118,7 @@ def mode1():
 
 timer.setTimeout(start, 3)
 timer.setTimeout(stop, 5)
-timer.setTimeout(start, 3)
-timer.setTimeout(mode1, 3)
-timer.setTimeout(mode0, 3)
-
+timer.setTimeout(start, 7)
+timer.setTimeout(mode1, 9)
+timer.setTimeout(mode0, 11)
+print('setup ready')
