@@ -1,7 +1,19 @@
 import time
 import sys
 from gpiozero import OutputDevice
-
+import threading
+from functools import wraps
+def delay(delay=0.):
+    """
+    Decorator delaying the execution of a function for a while.
+    """
+    def wrap(f):
+        @wraps(f)
+        def delayed(*args, **kwargs):
+            timer = threading.Timer(delay, f, args=args, kwargs=kwargs)
+            timer.start()
+        return delayed
+    return wrap
 
 class Stepper:
     def __init__(self, pin1, pin2, pin3, pin4):
