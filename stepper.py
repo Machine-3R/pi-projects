@@ -2,6 +2,7 @@ import time
 import sys
 from gpiozero import OutputDevice
 
+
 class Stepper:
     def __init__(self, IN1, IN2, IN3, IN4):
         self.stepPins = [IN1, IN2, IN3, IN4]    # Motor GPIO pins</p><p>
@@ -35,22 +36,22 @@ class Stepper:
             self.waitTime = 0.004    # 2 miliseconds was the maximun speed got on my tests
         self.stepCounter = 0
 
-        def run(self):
-            while True:                          # Start main loop
-                for pin in range(0, 4):
-                    xPin = self.stepPins[pin]          # Get GPIO
-                    if self.seq[self.stepCounter][pin] != 0:
-                        xPin.on()
-                    else:
-                        xPin.off()
+    def run(self):
+        while True:                          # Start main loop
+            for pin in range(0, 4):
+                xPin = self.stepPins[pin]          # Get GPIO
+                if self.seq[self.stepCounter][pin] != 0:
+                    xPin.on()
+                else:
+                    xPin.off()
 
-                self.stepCounter += self.stepDir
-                if (self.stepCounter >= self.stepCount):
-                    self.stepCounter = 0
-                if (self.stepCounter < 0):
-                    self.stepCounter = self.stepCount+self.stepDir
-                time.sleep(self.waitTime)     # Wait before moving on
-
+            self.stepCounter += self.stepDir
+            if (self.stepCounter >= self.stepCount):
+                self.stepCounter = 0
+            if (self.stepCounter < 0):
+                self.stepCounter = self.stepCount+self.stepDir
+            time.sleep(self.waitTime)     # Wait before moving on
+# end class Stepper
 
 IN1 = OutputDevice(25)
 IN2 = OutputDevice(8)
