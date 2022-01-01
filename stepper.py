@@ -101,8 +101,8 @@ stepper = Stepper(25, 8, 7, 1)
 timer = Timer()
 def changeMode():
     print('stop')
-    stepper.stop(1)
+    stepper.stop()
 timer.setTimeout(changeMode, 3)
 
 stepper.mode(0)
-stepper.run()
+stepper.start()
