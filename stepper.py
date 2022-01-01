@@ -93,12 +93,11 @@ class Stepper:
 
         
 stepper = Stepper(25, 8, 7, 1)
-stepper.mode(0)
-stepper.run()
-
 timer = Timer()
 def changeMode():
     print('change mode')
     stepper.mode(1)
 timer.setTimeout(changeMode, 3)
 
+stepper.mode(0)
+stepper.run()
