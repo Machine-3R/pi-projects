@@ -1,7 +1,7 @@
 import time
 import sys
 from gpiozero import OutputDevice as stepper
-IN1 = stepper(28)
+IN1 = stepper(25)
 IN2 = stepper(8)
 IN3 = stepper(7)
 IN4 = stepper(1)
