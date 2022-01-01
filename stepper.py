@@ -75,7 +75,7 @@ class Stepper:
         print('Stepper:mode', self._mode)
 
     def start(self):
-        print('Stepper:','mode',self._mode)
+        print('Stepper:start')
         self.isStarted = True
         while self.isStarted:                             # Start main loop
             for pin in range(0, 4):
@@ -93,6 +93,7 @@ class Stepper:
             time.sleep(self.waitTime)           # Wait before moving on
 
     def stop(self):
+        print('Stepper:stop')
         self.isStarted = False
 # end class Stepper
 
@@ -100,10 +101,10 @@ class Stepper:
 stepper = Stepper(25, 8, 7, 1)
 timer = Timer()
 def stop():
-    print('stop')
+    print('stopped.')
     stepper.stop()
 def start():
-    print('start')
+    print('started.')
     stepper.start()
 def mode(mode):
     print('set mode:', mode)
@@ -115,8 +116,8 @@ def mode0():
 def mode1():
     stepper.mode(1)
 
-timer.setTimeout(start, 2)
-timer.setTimeout(stop, 3)
+timer.setTimeout(start, 3)
+timer.setTimeout(stop, 5)
 timer.setTimeout(start, 3)
 timer.setTimeout(mode1, 3)
 timer.setTimeout(mode0, 3)
