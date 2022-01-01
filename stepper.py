@@ -63,6 +63,28 @@ class Stepper:
             time.sleep(self.waitTime)           # Wait before moving on
 # end class Stepper
 
+class Timer():
+    toClearTimer = False
+    def setTimeout(self, fn, time):
+        isInvokationCancelled = False
+        @delay(time)
+        def some_fn():
+                if (self.toClearTimer is False):
+                        fn()
+                else:
+                    print('Invokation is cleared!')        
+        some_fn()
+        return isInvokationCancelled
+    def setClearTimer(self):
+        self.toClearTimer = True
+# end class Timer
+#         
 stepper = Stepper(25, 8, 7, 1)
 stepper.mode(0)
 stepper.run()
+
+timer = Timer()
+def changeMode():
+    stepper.mode(1)
+timer.setTimeout(changeMode, 3)
+
