@@ -41,11 +41,11 @@ class Stepper:
         self.stepPins = [IN1, IN2, IN3, IN4]    # Motor GPIO pins
         self.stepDir = -1                       # Set to 1 for clockwise
                                                 # Set to -1 for anti-clockwise
-                                                # mode = 1: Low Speed ==> Higher Power
-        self.mode(1)
+                                                
+        self._mode = 1                          # mode = 1: Low Speed ==> Higher Power
                                                 # mode = 0: High Speed ==> Lower Power
 
-        if self._mode:                          # High Power
+        if self._mode:                          # High Power, Low Speed
             self.seq = [                        # Define step sequence as shown in manufacturers datasheet
                 [1, 0, 0, 1],
                 [1, 0, 0, 0],
@@ -56,7 +56,7 @@ class Stepper:
                 [0, 0, 1, 1],
                 [0, 0, 0, 1]
             ]
-        else:                                   # Low Power
+        else:                                   # Low Power, High speed
             seq = [                             # Define step sequence as shown in manufacturers datasheet
                 [1, 0, 0, 0],
                 [0, 1, 0, 0],
@@ -110,6 +110,7 @@ def mode(mode):
     stepper.mode(mode)
     print('set mode:', mode)
 
+# argumentless wrapper functions
 def mode0():
     stepper.mode(0)
 
@@ -119,6 +120,6 @@ def mode1():
 timer.setTimeout(start, 3)
 timer.setTimeout(stop, 5)
 timer.setTimeout(start, 7)
-timer.setTimeout(mode1, 9)
-timer.setTimeout(mode0, 11)
+timer.setTimeout(mode1, 8)
+timer.setTimeout(mode0, 13)
 print('setup ready')
