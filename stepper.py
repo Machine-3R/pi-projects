@@ -16,7 +16,7 @@ class Stepper:
         self.mode(1)
                                                 # mode = 0: High Speed ==> Lower Power
 
-        if self.mode:                           # High Power
+        if self._mode:                          # High Power
             self.seq = [                        # Define step sequence as shown in manufacturers datasheet
                 [1, 0, 0, 1],
                 [1, 0, 0, 0],
@@ -42,10 +42,11 @@ class Stepper:
         self.stepCounter = 0
 
     def mode(self, mode):
-        self.mode = mode % 2
-        print('Stepper:mode', self.mode)
+        self._mode = mode % 2
+        print('Stepper:mode', self._mode)
 
     def run(self):
+        print('Stepper:','mode',self._mode)
         while True:                             # Start main loop
             for pin in range(0, 4):
                 xPin = self.stepPins[pin]       # Get GPIO
