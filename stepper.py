@@ -28,7 +28,7 @@ class Stepper:
                 [0, 0, 1, 0],
                 [0, 0, 0, 1]
             ]
-        self.stepCount = len(seq)
+        self.stepCount = len(self.seq)
         if len(sys.argv) > 1:  # Read wait time from command line
             self.waitTime = int(sys.argv[1])/float(1000)
         else:
