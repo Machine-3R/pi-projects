@@ -1,13 +1,11 @@
 try:
     import RPi.GPIO as GPIO
 except:
-    print("Error importing RPi.GPIO!  Fallback to Mock.GPIO.")
+    print("Import error: RPi.GPIO! Fallback: Mock.GPIO.")
     import Mock.GPIO as GPIO
-
 import sys
 import getopt
 import time
-from datetime import datetime
 
 
 def getRaspiModel(argument):
@@ -107,19 +105,17 @@ def getGpioNum(argument):
 
 def initGpio(firstrun=0):
     # Init GPIO
-    # if not firstrun:
-    #     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(0)
 
     # Init GPIO pins, set event_detect callbacks, save initial states etc.
     for i, channel in enumerate(gpio_ch):
         if not gpio_inout[i]:
-            GPIO.setup(
-                channel,
-                GPIO.IN,
-                pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP
-            )
+            # GPIO.setup(
+            #     channel,
+            #     GPIO.IN,
+            #     pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP
+            # )
             GPIO.add_event_detect(
                 channel,
                 GPIO.BOTH,
@@ -133,44 +129,23 @@ def gpio_callback(channel):
     # Callback fucntion - waiting for event, changing gpio states
     global gpio_state
     gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
-    print("Channel:" + str(channel) + " changed " +
-          ("(on)" if GPIO.input(channel) else "(off)")+"\n")
+    print(
+        "Channel:" + str(channel),
+        " changed " + ("(on)" if GPIO.input(channel) else "(off)")
+    )
 
 
 # start script
-try:
-    # Check command line options
-    gpio_num = 0
-    opts, args = getopt.getopt(sys.argv[1:], "hg:", ["help", "gpio_num="])
-except getopt.GetoptError:
-    print('Usage: gpiotest.py [--gpio_num <num>]')
-    sys.exit(2)
-for opt, arg in opts:
-    if opt == '-h' or opt == '--help':
-        print('Usage: gpiotest.py [--gpio_num <num>]')
-        sys.exit()
-    elif opt == '-g' or opt == '--gpio_num':
-        if arg == '17':
-            gpio_num = 17
-        elif arg == '26':
-            gpio_num = 26
-        else:
-            print('Error: gpio_num must be 17 or 26')
-            sys.exit()
-
 try:
     # Detect Raspberry Pi model
     RaspiModel = getRaspiModel(GPIO.RPI_INFO['REVISION'])
     if (RaspiModel == "not supported"):
         raise RuntimeError('hardware not supported')
-
     print('RPi model:', RaspiModel)
 
     # Detect GPIO parameters
     # gpio_ch - array of GPIO lines numbers
-    if gpio_num == 0:
-        gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
-
+    gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
     if (gpio_num == 17):
         gpio_ch = [0, 1, 4, 7, 8, 9, 10, 11,
                    14, 15, 17, 18, 21, 22, 23, 24, 25]
@@ -191,16 +166,16 @@ try:
     print(gpio_inout)
 
     # Init GPIO
-    initGpio(1)
+    initGpio()
 
     # Main loop
     while True:
         time.sleep(0.1)
 
+except KeyboardInterrupt:
+    print('stopped by user.')
 except Exception as e:
-    # GPIO.cleanup()
     print(e)
 
 finally:
-    time.sleep(0.1)
-    print('finally')
+    print('closed.')
