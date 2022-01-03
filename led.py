@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-import RPi.GPIO as GPIO  # Import Raspberry Pi GPIO library
+try:
+    import RPi.GPIO as GPIO
+except:
+    print("Error importing RPi.GPIO!  Fallback to Mock.GPIO.")
+    import Mock.GPIO as GPIO
 from time import sleep  # Import the sleep function from the time module
 
 GPIO.setwarnings(False)  # Ignore warning for now
