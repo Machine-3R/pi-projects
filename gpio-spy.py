@@ -111,11 +111,11 @@ def initGpio(firstrun=0):
     # Init GPIO pins, set event_detect callbacks, save initial states etc.
     for i, channel in enumerate(gpio_ch):
         if not gpio_inout[i]:
-            # GPIO.setup(
-            #     channel,
-            #     GPIO.IN,
-            #     pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP
-            # )
+            GPIO.setup(
+                channel,
+                GPIO.IN,
+                pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP
+            )
             GPIO.add_event_detect(
                 channel,
                 GPIO.BOTH,
