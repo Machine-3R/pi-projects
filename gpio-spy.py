@@ -9,6 +9,7 @@ import getopt
 import time
 from datetime import datetime
 
+
 def getRaspiModel(argument):
     # Detect Raspberry Pi model
     switcher = {
@@ -106,8 +107,8 @@ def getGpioNum(argument):
 
 def initGpio(firstrun=0):
     # Init GPIO
-    if not firstrun:
-        GPIO.cleanup()
+    # if not firstrun:
+    #     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(0)
 
@@ -115,16 +116,26 @@ def initGpio(firstrun=0):
     for i, channel in enumerate(gpio_ch):
         if not gpio_inout[i]:
             GPIO.setup(
-                channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP)
-            GPIO.add_event_detect(channel, GPIO.BOTH,
-                                  callback=gpio_callback, bouncetime=debounce)
+                channel,
+                GPIO.IN,
+                pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP
+            )
+            GPIO.add_event_detect(
+                channel,
+                GPIO.BOTH,
+                callback=gpio_callback,
+                bouncetime=debounce
+            )
             gpio_state[i] = GPIO.input(channel)  # Primary state
+
 
 def gpio_callback(channel):
     # Callback fucntion - waiting for event, changing gpio states
     global gpio_state
     gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
-    print("Channel:" + str(channel) + " changed " + ("(on)" if GPIO.input(channel) else "(off)")+"\n")
+    print("Channel:" + str(channel) + " changed " +
+          ("(on)" if GPIO.input(channel) else "(off)")+"\n")
+
 
 # start script
 try:
@@ -187,7 +198,7 @@ try:
         time.sleep(0.1)
 
 except Exception as e:
-    GPIO.cleanup()
+    # GPIO.cleanup()
     print(e)
 
 finally:
