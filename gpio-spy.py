@@ -9,16 +9,8 @@ import getopt
 import time
 from datetime import datetime
 
-def SendToLog(LogMessage):
-    # Rotate log lines
-    global log
-    for i in range(0,5):
-        log[i] = log[i+1]
-    log[4] = LogMessage
-    print(LogMessage)
-
 def getRaspiModel(argument):
-    #Detect Raspberry Pi model
+    # Detect Raspberry Pi model
     switcher = {
         "0002": "Model B Revision 1.0 256Mb",
         "0003": "Model B Revision 1.0 + ECN0001 256Mb",
@@ -64,8 +56,9 @@ def getRaspiModel(argument):
     }
     return switcher.get(argument, "not supported")
 
+
 def getGpioNum(argument):
-    #Return number of GPIO lines
+    # Return number of GPIO lines
     switcher = {
         "0002": 17,
         "0003": 17,
@@ -110,34 +103,34 @@ def getGpioNum(argument):
     }
     return switcher.get(argument, 17)
 
+
 def initGpio(firstrun=0):
-    #Init GPIO
+    # Init GPIO
     if not firstrun:
         GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(0)
 
-    #Init GPIO pins, set event_detect callbacks, save initial states etc.
-    for i,channel in enumerate(gpio_ch):
+    # Init GPIO pins, set event_detect callbacks, save initial states etc.
+    for i, channel in enumerate(gpio_ch):
         if not gpio_inout[i]:
-            GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP)
-            GPIO.add_event_detect(channel, GPIO.BOTH, callback = gpio_callback, bouncetime = debounce)
-            gpio_state[i] = GPIO.input(channel) # Primary state
+            GPIO.setup(
+                channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP)
+            GPIO.add_event_detect(channel, GPIO.BOTH,
+                                  callback=gpio_callback, bouncetime=debounce)
+            gpio_state[i] = GPIO.input(channel)  # Primary state
 
 def gpio_callback(channel):
     # Callback fucntion - waiting for event, changing gpio states
     global gpio_state
-
-    if not on_pause:
-        gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
-    SendToLog(datetime.now().strftime("%Y-%b-%d %H:%M:%S")+": Channel " + str(channel) +
-          " changed " + ("(on)" if GPIO.input(channel) else "(off)")+"\n")
+    gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
+    print("Channel:" + str(channel) + " changed " + ("(on)" if GPIO.input(channel) else "(off)")+"\n")
 
 # start script
 try:
-    #Check command line options
+    # Check command line options
     gpio_num = 0
-    opts, args = getopt.getopt(sys.argv[1:],"hg:",["help","gpio_num="])
+    opts, args = getopt.getopt(sys.argv[1:], "hg:", ["help", "gpio_num="])
 except getopt.GetoptError:
     print('Usage: gpiotest.py [--gpio_num <num>]')
     sys.exit(2)
@@ -155,25 +148,27 @@ for opt, arg in opts:
             sys.exit()
 
 try:
-    #Detect Raspberry Pi model
+    # Detect Raspberry Pi model
     RaspiModel = getRaspiModel(GPIO.RPI_INFO['REVISION'])
     if (RaspiModel == "not supported"):
         raise RuntimeError('hardware not supported')
 
     print('RPi model:', RaspiModel)
 
-    #Detect GPIO parameters
-    #gpio_ch - array of GPIO lines numbers
+    # Detect GPIO parameters
+    # gpio_ch - array of GPIO lines numbers
     if gpio_num == 0:
         gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
 
     if (gpio_num == 17):
-        gpio_ch = [0,1,4,7,8,9,10,11,14,15,17,18,21,22,23,24,25]
+        gpio_ch = [0, 1, 4, 7, 8, 9, 10, 11,
+                   14, 15, 17, 18, 21, 22, 23, 24, 25]
     else:
-        gpio_ch = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]
+        gpio_ch = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+                   15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
     debounce = 200
 
-    #Init vars
+    # Init vars
     # 3 main structures:
     # gpio_state stores current states of GPIO pins
     # gpio_inout stores where pin configured to be IN or OUT
@@ -181,13 +176,13 @@ try:
     gpio_state = [0 for _ in range(gpio_num)]
     gpio_inout = [0 for _ in range(gpio_num)]
     gpio_pud = [0 for _ in range(gpio_num)]
-    on_pause = 0
     log = ['' for _ in range(6)]
+    print(gpio_inout)
 
-    #Init GPIO
+    # Init GPIO
     initGpio(1)
 
-    #Main loop
+    # Main loop
     while True:
         time.sleep(0.1)
 
