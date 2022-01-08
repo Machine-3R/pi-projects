@@ -1,7 +1,7 @@
 try:
     import RPi.GPIO as GPIO
 except:
-    print("Import error: RPi.GPIO! Fallback: Mock.GPIO.")
+    print("Import error: RPi.GPIO! Fallback: Mock.GPIO.\n")
     import Mock.GPIO as GPIO
 import sys
 import getopt
@@ -110,6 +110,7 @@ def initGpio(firstrun=0):
 
     # Init GPIO pins, set event_detect callbacks, save initial states etc.
     for i, channel in enumerate(gpio_ch):
+        print(i, channel, GPIO.gpio_function(channel))
         if not gpio_inout[i]:
             GPIO.setup(
                 channel,
@@ -123,7 +124,6 @@ def initGpio(firstrun=0):
                 bouncetime=debounce
             )
             gpio_state[i] = GPIO.input(channel)  # Primary state
-
 
 def gpio_callback(channel):
     # Callback fucntion - waiting for event, changing gpio states
@@ -163,8 +163,7 @@ try:
     gpio_inout = [0 for _ in range(gpio_num)]
     gpio_pud = [0 for _ in range(gpio_num)]
     log = ['' for _ in range(6)]
-    print(gpio_inout)
-
+ 
     # Init GPIO
     initGpio()
 
