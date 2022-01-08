@@ -144,7 +144,8 @@ try:
     if (RaspiModel == "not supported"):
         raise RuntimeError('hardware not supported')
     print('RPi model:', RaspiModel)
-    print(GPIO.IN, GPIO.OUT, GPIO.SPI, GPIO.I2C, GPIO.HARD_PWM, GPIO.SERIAL, GPIO.UNKNOWN)
+    print('functions:',GPIO.IN, GPIO.OUT, GPIO.SPI, GPIO.I2C, GPIO.HARD_PWM, GPIO.SERIAL, GPIO.UNKNOWN)
+    
     # Detect GPIO parameters
     # gpio_ch - array of GPIO lines numbers
     gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
