@@ -132,7 +132,7 @@ def gpio_callback(channel):
     gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
     print(
         "Channel:" + str(channel),
-        "Function" + GPIO.gpio_function(channel),
+        "Function" + str(GPIO.gpio_function(channel)),
         " changed " + ("(on)" if GPIO.input(channel) else "(off)")
     )
 
