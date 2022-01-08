@@ -126,11 +126,13 @@ def initGpio(firstrun=0):
             gpio_state[i] = GPIO.input(channel)  # Primary state
 
 def gpio_callback(channel):
-    # Callback fucntion - waiting for event, changing gpio states
+    # Callback function - waiting for event, changing gpio states
     global gpio_state
+    gpio_inout[gpio_ch.index(channel)] = GPIO.gpio_function(channel)
     gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
     print(
         "Channel:" + str(channel),
+        "Function" + GPIO.gpio_function(channel),
         " changed " + ("(on)" if GPIO.input(channel) else "(off)")
     )
 
@@ -142,7 +144,7 @@ try:
     if (RaspiModel == "not supported"):
         raise RuntimeError('hardware not supported')
     print('RPi model:', RaspiModel)
-
+    print(GPIO.getMode(), GPIO.IN, GPIO.OUT, GPIO.SPI, GPIO.I2C, GPIO.HARD_PWM, GPIO.SERIAL, GPIO.UNKNOWN)
     # Detect GPIO parameters
     # gpio_ch - array of GPIO lines numbers
     gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
